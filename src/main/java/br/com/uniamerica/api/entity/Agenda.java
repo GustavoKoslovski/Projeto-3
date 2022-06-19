@@ -36,6 +36,7 @@ public class Agenda extends AbstractEntity {
     @ManyToOne
     private Paciente paciente;
 
+    @Getter @Setter
     @ManyToOne
     private Medico medico;
 }

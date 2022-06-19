@@ -1,5 +1,4 @@
 package br.com.uniamerica.api.service;
-import br.com.uniamerica.api.entity.Especialidade;
 import br.com.uniamerica.api.entity.Paciente;
 import br.com.uniamerica.api.entity.TipoAtendimento;
 import br.com.uniamerica.api.repository.PacienteRepository;
@@ -7,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -18,7 +16,8 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public Optional<Paciente> fyndById(Long id){return this.pacienteRepository.findById(id);
+    public Paciente findById(Long id) {
+        return this.pacienteRepository.findById(id).orElse(new Paciente());
     }
 
     public Page<Paciente> listAll(Pageable pageable){return this.pacienteRepository.findAll(pageable);
@@ -72,5 +71,16 @@ public class PacienteService {
             paciente.setDataVencimento(null);
         }
 
+    }
+
+    @Transactional
+    public void desativar(Long id, Paciente paciente) {
+        if (id == paciente.getId()) {
+            this.pacienteRepository.desativar(paciente.getId());
         }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
+
 }

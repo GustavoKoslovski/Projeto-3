@@ -17,4 +17,6 @@ public interface AgendaRepository extends JpaRepository<Agenda,Long> {
             "WHERE agenda.id = :agenda")
     public void updateStatus(@Param("excluido") LocalDateTime excluido, @Param("agenda") Long idAgenda);
 
+
+
 }

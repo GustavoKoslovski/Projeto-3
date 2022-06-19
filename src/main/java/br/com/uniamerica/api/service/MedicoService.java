@@ -15,10 +15,9 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public Optional<Medico> findById (Long id){
-        return this.medicoRepository.findById(id);
+    public Medico findById(Long id) {
+        return this.medicoRepository.findById(id).orElse(new Medico());
     }
-
     public Page<Medico> listAll (Pageable pageable){
         return this.medicoRepository.findAll(pageable);
     }
@@ -48,6 +47,15 @@ public class MedicoService {
         }
     }
 
+    @Transactional
+    public void desativar(Long id, Medico medico) {
+        if (id == medico.getId()) {
+            this.medicoRepository.desativar(medico.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
 
 
 }

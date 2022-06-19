@@ -14,8 +14,8 @@ public class ConvenioService {
     private ConvenioRepository convenioRepository;
 
 
-    public Optional<Convenio> findById (Long id){
-        return this.convenioRepository.findById(id);
+    public Convenio findById(Long id){
+        return this.convenioRepository.findById(id).orElse(new Convenio());
     }
 
     public Page<Convenio> listAll (Pageable pageable){

@@ -7,16 +7,19 @@ import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+@Service
 public class AgendaService {
 
     @Autowired
     private AgendaRepository agendaRepository;
-    public Optional<Agenda> fyndById(Long id){return this.agendaRepository.findById(id);
+    public Agenda findById(Long id){
+        return this.agendaRepository.findById(id).orElse(new Agenda());
     }
 
     public Page<Agenda> listAll(Pageable pageable){return this.agendaRepository.findAll(pageable);
@@ -48,7 +51,7 @@ public class AgendaService {
 
     public void validarData(LocalDateTime dataAte ,LocalDateTime dataDe){
         if(dataDe.compareTo(dataAte) >= 0 ){
-            throw new RuntimeException("Data inválida");
+                throw new RuntimeException("Data inválida");
         }
     }
 
@@ -119,11 +122,23 @@ public class AgendaService {
             throw new RuntimeException("Informe uma data de término do atendimento");
         }
 
+        if (agenda.getMedico() == null){
+            throw new RuntimeException("Informe um Medico para o Agendamento");
+        }
         if (agenda.getPaciente() == null){
             throw new RuntimeException("Informe um Paciente para o Agendamento");
         }
 
     }
+
+    public void desativar(final Long id, final Agenda agenda) {
+        if (id == agenda.getId()) {
+            this.agendaRepository.desativar(agenda.getId());
+        } else {
+            throw new RuntimeException("Error: Informações inconsistente, tente novamento mais tarde;");
+        }
+    }
+
 
 }
 

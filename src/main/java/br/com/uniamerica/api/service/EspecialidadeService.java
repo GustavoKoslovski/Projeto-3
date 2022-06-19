@@ -17,8 +17,8 @@ public class EspecialidadeService {
     @Autowired
     private EspecialidadeRepository especialidadeRepository;
 
-    public Optional<Especialidade> findById(Long id){
-        return this.especialidadeRepository.findById(id);
+    public Especialidade findById(Long id){
+        return this.especialidadeRepository.findById(id).orElse(new Especialidade());
     }
 
     public Page<Especialidade> listAll(Pageable pageable){
@@ -50,7 +50,15 @@ public class EspecialidadeService {
         }
     }
 
-
+    @Transactional
+    public void desativar(Long id, Especialidade especialidade){
+        if (id == especialidade.getId()) {
+            this.especialidadeRepository.desativar(especialidade.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
 
 
 
