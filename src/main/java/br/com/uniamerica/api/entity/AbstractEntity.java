@@ -34,6 +34,20 @@ public abstract class AbstractEntity {
     @Column(name = "ativo")
     private Boolean ativo;
 
+    /**
+     * Método executado antes da execução repository.save
+     */
+    @PrePersist
+    public void dataCadastro(){
+        this.cadastro = LocalDateTime.now();
+    }
 
+    /**
+     * Método executado antes da execução repository.update
+     */
+    @PreUpdate
+    public void dataAtualizacao(){
+        this.atualizado = LocalDateTime.now();
+    }
 
 }

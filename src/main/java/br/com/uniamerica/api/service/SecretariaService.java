@@ -39,15 +39,7 @@ public class SecretariaService {
         this.secretariaRepository.save(secretaria);
     }
 
-    @Transactional
-    public void updateStatus(Long id, Secretaria secretaria){
-        if (id == secretaria.getId()) {
-            this.secretariaRepository.updateStatus(LocalDateTime.now(),secretaria.getId());
-        }
-        else {
-            throw new RuntimeException();
-        }
-    }
+
     @Transactional
     public void desativar(Long id, Secretaria secretaria){
         if (id == secretaria.getId()) {

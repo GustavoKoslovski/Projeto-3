@@ -9,15 +9,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
+/**
+ * @author Eduardo Sganderla
+ *
+ * @since 1.0.0, 07/04/2022
+ * @version 1.0.0
+ */
 @Controller
+@CrossOrigin
 @RequestMapping("/api/especialidades")
 public class EspecialidadeController {
 
     @Autowired
     private EspecialidadeService especialidadeService;
 
-
+    /**
+     *
+     * @param idEspecialidade
+     * @return
+     */
     @GetMapping("/{idEspecialidade}")
     public ResponseEntity<Especialidade> findById(
             @PathVariable("idEspecialidade") Long idEspecialidade
@@ -25,7 +35,11 @@ public class EspecialidadeController {
         return ResponseEntity.ok().body(this.especialidadeService.findById(idEspecialidade));
     }
 
-
+    /**
+     *
+     * @param pageable
+     * @return
+     */
     @GetMapping
     public ResponseEntity<Page<Especialidade>> listByAllPage(
             Pageable pageable
@@ -33,7 +47,11 @@ public class EspecialidadeController {
         return ResponseEntity.ok().body(this.especialidadeService.listAll(pageable));
     }
 
-
+    /**
+     *
+     * @param especialidade
+     * @return
+     */
     @PostMapping
     public ResponseEntity<?> insert(
             @RequestBody Especialidade especialidade
@@ -46,7 +64,12 @@ public class EspecialidadeController {
         }
     }
 
-
+    /**
+     *
+     * @param idEspecialidade
+     * @param especialidade
+     * @return
+     */
     @PutMapping("/{idEspecialidade}")
     public ResponseEntity<?> update(
             @PathVariable Long idEspecialidade,
@@ -60,7 +83,12 @@ public class EspecialidadeController {
         }
     }
 
-
+    /**
+     *
+     * @param idEspecialidade
+     * @param especialidade
+     * @return
+     */
     @PutMapping("/desativar/{idEspecialidade}")
     public ResponseEntity<?> desativar(
             @PathVariable Long idEspecialidade,
