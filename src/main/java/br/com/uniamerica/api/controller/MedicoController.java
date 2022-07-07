@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@CrossOrigin
 @RequestMapping("/api/medicos")
 public class MedicoController {
 
